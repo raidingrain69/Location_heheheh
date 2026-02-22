@@ -66,6 +66,23 @@ export default function Home() {
   const [pinTitle, setPinTitle] = useState("");
   const [pinDesc, setPinDesc] = useState("");
 
+  // Auto-locate on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords: L.LatLngTuple = [position.coords.latitude, position.coords.longitude];
+          setUserLocation(coords);
+          toast({ title: "Found your location! 📍" });
+        },
+        () => {
+          console.log("Initial location access denied or unavailable.");
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    }
+  }, []);
+
   useEffect(() => {
     const saved = localStorage.getItem("uni_tracker_pins");
     if (saved) {
