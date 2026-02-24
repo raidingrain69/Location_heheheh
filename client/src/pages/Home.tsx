@@ -363,7 +363,10 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-                <Button size="icon" variant="ghost" className="rounded-2xl h-14 w-14 hover:bg-white/10 text-white" onClick={() => setIsSidebarOpen(false)}>
+                <Button size="icon" variant="ghost" className="rounded-2xl h-14 w-14 hover:bg-white/10 text-white" onClick={() => {
+                  setIsSidebarOpen(false);
+                  setSelectedLocation(null);
+                }}>
                   <X className="h-8 w-8" />
                 </Button>
               </div>
@@ -381,7 +384,7 @@ export default function Home() {
                           placeholder="ASSIGN LABEL..." 
                           value={pinTitle}
                           onChange={e => setPinTitle(e.target.value)}
-                          className="bg-black/50 border-2 border-white/10 h-16 px-8 text-xl font-black rounded-2xl focus-visible:ring-emerald-500 focus-visible:border-emerald-500 uppercase tracking-tight"
+                          className="bg-black/50 border-2 border-white/10 h-16 px-8 text-xl font-black rounded-2xl focus-visible:ring-emerald-500 focus-visible:border-emerald-500 uppercase tracking-tight text-white"
                         />
                       </div>
                       <div className="space-y-4">
@@ -391,12 +394,19 @@ export default function Home() {
                           value={pinDesc}
                           onChange={e => setPinDesc(e.target.value)}
                           rows={4}
-                          className="bg-black/50 border-2 border-white/10 px-8 py-6 text-lg rounded-2xl focus-visible:ring-emerald-500 focus-visible:border-emerald-500 tracking-tight resize-none font-medium"
+                          className="bg-black/50 border-2 border-white/10 px-8 py-6 text-lg rounded-2xl focus-visible:ring-emerald-500 focus-visible:border-emerald-500 tracking-tight resize-none font-medium text-white"
                         />
                       </div>
                       <div className="flex gap-4 pt-4">
                         <Button className="flex-1 h-20 rounded-2xl font-black text-xl uppercase italic bg-emerald-500 hover:bg-emerald-400 text-black shadow-2xl shadow-emerald-500/20 border-b-4 border-emerald-700 active:translate-y-1 transition-all" onClick={savePin}>
                           Commit Data
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="h-20 px-8 rounded-2xl border-2 border-white/10 hover:bg-white/5 text-white font-black uppercase tracking-tighter"
+                          onClick={() => setSelectedLocation(null)}
+                        >
+                          Cancel
                         </Button>
                       </div>
                     </div>
