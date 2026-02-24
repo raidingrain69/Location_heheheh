@@ -203,6 +203,8 @@ export default function Home() {
           <TileLayer
             attribution='&copy; CartoDB'
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            useCache={true}
+            crossOrigin={true}
           />
           
           <MapController center={userLocation} />
