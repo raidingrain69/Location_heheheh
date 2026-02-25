@@ -363,10 +363,18 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-                <Button size="icon" variant="ghost" className="rounded-2xl h-14 w-14 hover:bg-white/10 text-white" onClick={() => {
-                  setIsSidebarOpen(false);
-                  setSelectedLocation(null);
-                }}>
+                <Button 
+                  size="icon" 
+                  variant="ghost" 
+                  className="rounded-2xl h-14 w-14 hover:bg-white/10 text-white z-[510] pointer-events-auto" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsSidebarOpen(false);
+                    setSelectedLocation(null);
+                    setIsAddingPin(false);
+                  }}
+                >
                   <X className="h-8 w-8" />
                 </Button>
               </div>
