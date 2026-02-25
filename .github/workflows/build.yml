@@ -22,7 +22,7 @@ jobs:
 
       - name: Add Capacitor (iOS Wrapper)
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/ios
+          npm install @capacitor/core @capacitor/cli @capacitor/ios@6
           npx cap init "Drive Mapper" "com.drive.mapper" --web-dir dist/public
           npx cap add ios
           npx cap sync ios
