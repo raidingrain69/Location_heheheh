@@ -1,0 +1,46 @@
+name: Build Unsigned IPA for AltStore
+
+on:
+  workflow_dispatch: # This allows you to trigger the build manually
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install and Build Vite App
+        run: |
+          npm install
+          npm run build
+
+      - name: Add Capacitor (iOS Wrapper)
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/ios
+          npx cap init "Drive Mapper" "com.drive.mapper" --web-dir dist/public
+          npx cap add ios
+          npx cap sync ios
+
+      - name: Build Unsigned iOS App (Xcode)
+        run: |
+          cd ios/App
+          # This forces Xcode to build the app without asking for an Apple Developer account
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos SYMROOT="$(PWD)/build" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO build
+
+      - name: Package into IPA
+        run: |
+          mkdir Payload
+          cp -r ios/App/build/Release-iphoneos/App.app Payload/
+          zip -r DriveMapper.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DriveMapper-IPA
+          path: DriveMapper.ipa
